@@ -47,4 +47,4 @@ d = 3
 
 print("Modulo of m by ", d, "\n", modulo(m,d), "\n")
 
-print("Maximum value of m is located at \n", max(matrix))
+print("Maximum value of m is located at \n", max(matrix), "which is ", matrix[max(matrix)[0]][max(matrix)[1]], "\n")
