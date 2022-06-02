@@ -1,7 +1,7 @@
-from operator import invert
 import numpy as np
 
 import csv
+
 
 with open("CelticsStartingFive.txt") as file:
     reader = csv.reader(file)
