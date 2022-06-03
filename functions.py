@@ -10,5 +10,9 @@ def mk_mtx(file):
     return matrix 
 
 m1 = mk_mtx("dummy.txt")
-eig = la.eig(np.matmul(np.transpose(m1),m1))
+
+avgm = np.asarray
+
+
+eig = la.eig(np.matmul(m1,np.transpose(m1)))
 print(eig[1])
