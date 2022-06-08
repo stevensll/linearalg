@@ -12,5 +12,5 @@ def mk_mtx(file):
 m1 = mk_mtx("dummy.txt")
 
 m2 = mk_mtx("b.txt")
-
+print(m2)
 print(np.matmul(m2,np.transpose(m1)))
