@@ -11,8 +11,6 @@ def mk_mtx(file):
 
 m1 = mk_mtx("dummy.txt")
 
-avgm = np.asarray
+m2 = mk_mtx("b.txt")
 
-
-eig = la.eig(np.matmul(m1,np.transpose(m1)))
-print(eig[1])
+print(np.matmul(m2,np.transpose(m1)))
