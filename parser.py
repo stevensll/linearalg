@@ -7,7 +7,6 @@ import functions
 ecf = open("ecf.txt").read().splitlines()
 wcf = open("wcf.txt").read().splitlines()
 nba = ecf + wcf
-nbaDict = OrderedDict({key: 0 for key in nba})
 # print(nba)
 
 matchups = np.zeros((len(nba), len(nba)), int)
@@ -29,15 +28,7 @@ with open("NBA2022edited.csv") as file:
         matchups[nba.index(teamB)][nba.index(teamA)]+=1
         matchups[nba.index(teamA)][nba.index(teamB)]+=1
 
-i = 0
-print(wins)
-for v in nbaDict:
-    nbaDict[v] = int(wins[i])
-    i+=1
-
-print(nbaDict)
 # print(matchups)
-# print(wins)
 # print("\n")
 np.savetxt("matchups.csv",matchups.astype(int), fmt='%i',delimiter=",")
 
@@ -50,13 +41,21 @@ colleyResult=functions.colley_solve(colleyMatrix, colleyVector)
 print(colleyResult)
 
 print("\n")
-oldRankings = dict(sorted(nbaDict.items(), key=itemgetter(1), reverse=True))
-with open('old-standings.csv', 'w') as file:
-    w = csv.writer(file)
-    w.writerows(oldRankings.items())
-    
-colleyStandings = {nba[i]:colleyResult[i] for i in range(len(nba))}
-newStandings = dict(sorted(colleyStandings.items(),key=itemgetter(1),reverse=True))
-with open('new-standings.csv', 'w') as file:
-    w = csv.writer(file)
-    w.writerows(newStandings.items())
+
+
+def mk_standings(team_list,ranking_list):
+    dic = {team_list[i]:ranking_list[i] for i in range(len(team_list))}
+    return dict(sorted(dic.items(), key=itemgetter(1), reverse=True))  
+
+def mk_standings_csv(dic, file):
+    with open(file, 'w') as file:
+        w = csv.writer(file)
+        w.writerows(dic.items())
+
+oldRankings = mk_standings(nba,wins)
+
+newStandings = mk_standings(nba, colleyResult) 
+
+
+mk_standings_csv(oldRankings, 'old-standings.csv')
+mk_standings_csv(newStandings, 'new-standings.csv')
