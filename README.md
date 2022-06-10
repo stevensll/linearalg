@@ -30,4 +30,4 @@ You can check out the different outputs by changing the input file in the `with 
 
 Alternatively, you can use your own data and call the functions yourself. **The most important thing is to make sure you generate a proper matchup matrix**, which is a n by n matrix where each row, column represents the amount of games team row played against team column. 
 
-To see an example, check out the data [here](https://docs.google.com/spreadsheets/d/1XW7BVppVHFHgkYIFt8ZXMZyTFxi_Zi-haj1cCEbxGEE/edit#gid=1556726268) `
+To see an example, check out the data [here](https://docs.google.com/spreadsheets/d/1XW7BVppVHFHgkYIFt8ZXMZyTFxi_Zi-haj1cCEbxGEE/edit#gid=1556726268).

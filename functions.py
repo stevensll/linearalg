@@ -10,6 +10,13 @@ def mk_mtx(file):
     matrix = np.asarray(m, float)
     return matrix 
 
+##IMPORTANT: BOTH colley and massey methods require a n x n input matrix containing matchup data. 
+#  Each row,col pair represents the amount of times team a has played b. The diagonals represent how many games played in total by that team.
+#  To see how its formatted,check 
+## https://docs.google.com/spreadsheets/d/1XW7BVppVHFHgkYIFt8ZXMZyTFxi_Zi-haj1cCEbxGEE/edit#gid=52478525
+## 
+## THE MASSEY MATRIX IS ADJUSTED IN THE MASSEY.py code. IT IS IMPORTANT TO MAKE THIS ADJJUSTMENT BEFORE USING IT AS AN INPUT
+
 def colley_solve(colleyMatrix, colleyVector):
     r = np.matmul(np.linalg.inv(colleyMatrix), colleyVector)
     return np.round(r,2);
