@@ -4,15 +4,15 @@ from operator import itemgetter
 import numpy as np
 import functions
 
+# DATA PARSING
 ecf = open("ecf.txt").read().splitlines()
 wcf = open("wcf.txt").read().splitlines()
 nba = ecf + wcf
-# print(nba)
 
 matchups = np.zeros((len(nba), len(nba)), int)
 wins = np.zeros(len(nba), int)
 
-with open("NBA2022edited.csv") as file:
+with open("NBA2022.csv") as file:
     reader = csv.reader(file)
     for r in reader:
         teamA = r[2]
@@ -28,34 +28,17 @@ with open("NBA2022edited.csv") as file:
         matchups[nba.index(teamB)][nba.index(teamA)]+=1
         matchups[nba.index(teamA)][nba.index(teamB)]+=1
 
-# print(matchups)
-# print("\n")
+#Save the Matchup Matrix
 np.savetxt("matchups.csv",matchups.astype(int), fmt='%i',delimiter=",")
 
+#form the colley matrix
 colleyMatrix,colleyVector = functions.mk_colley(matchups, wins)
 
-print(colleyVector)
-
+#Solve for the colley ranking vector
 colleyResult=functions.colley_solve(colleyMatrix, colleyVector)
 
-print(colleyResult)
-
-print("\n")
-
-
-def mk_standings(team_list,ranking_list):
-    dic = {team_list[i]:ranking_list[i] for i in range(len(team_list))}
-    return dict(sorted(dic.items(), key=itemgetter(1), reverse=True))  
-
-def mk_standings_csv(dic, file):
-    with open(file, 'w') as file:
-        w = csv.writer(file)
-        w.writerows(dic.items())
-
-oldRankings = mk_standings(nba,wins)
-
-newStandings = mk_standings(nba, colleyResult) 
-
-
-mk_standings_csv(oldRankings, 'old-standings.csv')
-mk_standings_csv(newStandings, 'new-standings.csv')
+#Save old and new standings as CSV
+oldRankings = functions.mk_standings(nba,wins)
+newStandings = functions.mk_standings(nba, colleyResult) 
+functions.mk_standings_csv(oldRankings, 'old-standings.csv')
+functions.mk_standings_csv(newStandings, 'new-standings.csv')

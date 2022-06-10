@@ -1,6 +1,7 @@
 import numpy as np
 from numpy import linalg as la
 import csv
+from operator import itemgetter
 
 def mk_mtx(file):
     with open(file) as f:
@@ -9,11 +10,10 @@ def mk_mtx(file):
     matrix = np.asarray(m, float)
     return matrix 
 
-m1 = mk_mtx("dummy.txt")
-
 def colley_solve(colleyMatrix, colleyVector):
     r = np.matmul(np.linalg.inv(colleyMatrix), colleyVector)
     return np.round(r,2);
+
 def mk_colley(m, v):
     cm = np.copy(m)
     cv  = np.copy(v)
@@ -23,9 +23,19 @@ def mk_colley(m, v):
                 cm[i][j]+=2
             else:
                 cm[i][j]*=-1
-        cv[i]=1+(v[i]-(m[0][0]-v[i]))/2
+        cv[i]=1+(v[i]-(m[i][i]-v[i]))/2
     return cm,cv
 
-m2 = mk_mtx("b.txt")
-print(m2)
-print(np.matmul(m2,la.inv(m1)))
+def massey_solve(masseyMat,masseyV):
+    r = np.matmul(np.linalg.inv(masseyMat),masseyV)
+    return np.round(r,2);
+
+
+def mk_standings(team_list,ranking_list):
+    dic = {team_list[i]:ranking_list[i] for i in range(len(team_list))}
+    return dict(sorted(dic.items(), key=itemgetter(1), reverse=True))  
+
+def mk_standings_csv(dic, file):
+    with open(file, 'w') as file:
+        w = csv.writer(file)
+        w.writerows(dic.items())
